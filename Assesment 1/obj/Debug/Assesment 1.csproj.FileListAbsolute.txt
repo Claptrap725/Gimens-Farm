@@ -1,0 +1,8 @@
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\bin\Debug\Assesment 1.exe.config
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\bin\Debug\Assesment 1.exe
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\bin\Debug\Assesment 1.pdb
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.csprojAssemblyReference.cache
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.csproj.CoreCompileInputs.cache
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.exe
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.pdb
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\bin\Debug\SaveData.txt
