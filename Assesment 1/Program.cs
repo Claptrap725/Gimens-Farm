@@ -44,6 +44,7 @@ namespace Assesment_1
 
                 streamCount++;
             }
+            streamReader.Close();
 
             //--------------------MAIN MENU--------------------//
             Console.WriteLine("Thanks for playing Gimen's Farming Simulator!");
@@ -80,13 +81,11 @@ namespace Assesment_1
             Console.Clear();
             Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n--------------------------------------------------------------------------------------------------------\nHello! Thank you for buying the Gimen Farm! You will be pleased with your purchase! (Press Enter)");
             Console.ReadLine();
-            Console.WriteLine("As a bit of a disclaimer: Most people don't survive here long enough to even see Sowthon.");
+            Console.WriteLine("As a bit of a disclaimer: Most people don't survive here long enough to even see the Sowthon.");
             Console.ReadLine();
             Console.WriteLine("And the ones that do... Well, they don't make it much longer after that.");
             Console.ReadLine();
             Console.WriteLine("You should start your first week by planting some crops and watering them! I\'ll give you some seeds to start off.");
-            Console.ReadLine();
-            Console.WriteLine("Type \"H\" to see a list of commands.");
             Console.ReadLine();
 
 
@@ -140,6 +139,7 @@ namespace Assesment_1
         {
             string input = "";
             Console.WriteLine($"\n\n\n\n\n\nWhat would you like to do today? WEEK {week} {GetDay()}");
+            Console.WriteLine("(Type \"H\" to see a list of commands.)");
             input = Console.ReadLine();
             input = input.ToLower();
 
@@ -166,7 +166,8 @@ namespace Assesment_1
             else if (input == "l")
             {
                 Player.PrintAllPlants();
-                Console.WriteLine($"\n\nBundles of wheat: {Player.wheatProduce}.");
+                Console.WriteLine("\n\nCeller Stock - ");
+                Console.WriteLine($"Bundles of wheat: {Player.wheatProduce}.");
                 Console.WriteLine($"Barrels of Cabbage: {Player.cabbageProduce}.");
                 Console.WriteLine($"Sacks of Potatoes: {Player.potatoesProduce}.");
                 Console.WriteLine($"Barrows of corn ears: {Player.cornProduce}.");
@@ -251,7 +252,7 @@ namespace Assesment_1
                     return;
                 }
                 int pos = - 1;
-                Console.WriteLine("Which Wheat plant would you like to water? Please type a number from the list.");
+                Console.WriteLine("Which Wheat plant would you like to water? Please type a plant number from the list.");
                 Player.PrintAllWheat();
                 input = Console.ReadLine();
                 if (input.ToLower() == "b") return;
@@ -290,7 +291,7 @@ namespace Assesment_1
                     return;
                 }
                 int pos = -1;
-                Console.WriteLine("Which Cabbage plant would you like to water? Please type a number from the list.");
+                Console.WriteLine("Which Cabbage plant would you like to water? Please type a plant number from the list.");
                 Player.PrintAllCabbage();
                 input = Console.ReadLine();
                 if (input.ToLower() == "b") return;
@@ -329,7 +330,7 @@ namespace Assesment_1
                     return;
                 }
                 int pos = -1;
-                Console.WriteLine("Which Potatoe plant would you like to water? Please type a number from the list.");
+                Console.WriteLine("Which Potato plant would you like to water? Please type a plant number from the list.");
                 Player.PrintAllPotatoes();
                 input = Console.ReadLine();
                 if (input.ToLower() == "b") return;
@@ -368,7 +369,7 @@ namespace Assesment_1
                     return;
                 }
                 int pos = -1;
-                Console.WriteLine("Which Corn plant would you like to water? Please type a number from the list.");
+                Console.WriteLine("Which Corn plant would you like to water? Please type a plant number from the list.");
                 Player.PrintAllCorn();
                 input = Console.ReadLine();
                 if (input.ToLower() == "b") return;
@@ -424,7 +425,7 @@ namespace Assesment_1
                     return;
                 }
                 int pos = -1;
-                Console.WriteLine("Which Wheat plant would you like to harvest? Please type a number from the list.");
+                Console.WriteLine("Which wheat plant would you like to harvest? Please type a plant number from the list.");
                 Player.PrintAllWheat();
                 input = Console.ReadLine();
                 if (input.ToLower() == "b") return;
@@ -472,7 +473,7 @@ namespace Assesment_1
                     return;
                 }
                 int pos = -1;
-                Console.WriteLine("Which cabbage plant would you like to harvest? Please type a number from the list.");
+                Console.WriteLine("Which cabbage plant would you like to harvest? Please type a plant number from the list.");
                 Player.PrintAllCabbage();
                 input = Console.ReadLine();
                 if (input.ToLower() == "b") return;
@@ -519,7 +520,7 @@ namespace Assesment_1
                     return;
                 }
                 int pos = -1;
-                Console.WriteLine("Which potatoes plant would you like to harvest? Please type a number from the list.");
+                Console.WriteLine("Which potato plant would you like to harvest? Please type a plant number from the list.");
                 Player.PrintAllPotatoes();
                 input = Console.ReadLine();
                 if (input.ToLower() == "b") return;
@@ -566,7 +567,7 @@ namespace Assesment_1
                     return;
                 }
                 int pos = -1;
-                Console.WriteLine("Which corn plant would you like to harvest? Please type a number from the list.");
+                Console.WriteLine("Which corn plant would you like to harvest? Please type a plant number from the list.");
                 Player.PrintAllCorn();
                 input = Console.ReadLine();
                 if (input.ToLower() == "b") return;
@@ -777,7 +778,7 @@ namespace Assesment_1
             }
             else if (cabbageField == 2)
             {
-                Console.WriteLine("This week, you discover the culprit of the you holy cabbage.");
+                Console.WriteLine("This week, you discover the culprit of the you holl filled cabbage.");
                 Console.ReadLine();
                 Console.WriteLine("You squash a locust that was resting on a head of cabbage.");
                 Console.ReadLine();
