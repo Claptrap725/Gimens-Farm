@@ -10,20 +10,21 @@ namespace Assesment_1
     class Program
     {
         static bool temp = false;//this is just a variable that is always false
-        static int actions = 7;
-        static bool gameToClose = false;
-        static int week = 1;
-        static int day = 1;
-        static int[,] dayData = new int[7,5];//[week, type of plant] stores how many days were speant in that field
-        static bool[] endingsUnlocked = new bool[8];
+        static int actions = 7;//varible controls how much the player can do. When it reaches 0 it is the end of the week
+        static bool gameToClose = false;//if true the game will ask the player if they want to play again and either restarts the game or closes the game
+        static bool closeWithoutRestart = false;//if true the game will close with asking if they'd like to restart
+        static int week = 1;//current in game week
+        static int day = 1;//current in game day
+        static int[,] dayData = new int[7,5];//[week, type of plant] stores how many days were speant in a specific type of field for one week
+        static bool[] endingsUnlocked = new bool[8];//stores what endings are unlocked
 
-        static int wheatField = 0;
-        static int cabbageField = 0;
-        static int potatoesField = 0;
-        static int cornField = 0;
-        static int multipleFields = 0;
+        static int wheatField = 0;//how many weeks the player has triggered the WheatField event
+        static int cabbageField = 0;//how many weeks the player has triggered the CabbageField event
+        static int potatoesField = 0;//how many weeks the player has triggered the PotatoesField event
+        static int cornField = 0;//how many weeks the player has triggered the CornField event
+        static int multipleFields = 0;//how many weeks the player has triggered the MultipleFields event
 
-        
+
 
         static void Main()
         {
@@ -58,18 +59,20 @@ namespace Assesment_1
                 input = Console.ReadLine();
                 input = input.ToLower();
 
-                if (input == "start" || input == "s")
+                if (input == "start" || input == "s")//Game breaks and continues to the intro and main game loop
                 {
                     break;
                 }
-                else if (input == "endings")
+                else if (input == "endings")//Calls method that lets them re watch endings that they have previously unlocked
                 {
                     ChooseToViewEnding();
                     Console.Clear();
                 }
-                else if (input == "exit")
+                else if (input == "exit")//Goes to close or restart
                 {
-                    goto CloseApp;
+                    gameToClose = true;
+                    closeWithoutRestart = true;
+                    break;
                 }
                 else
                 {
@@ -78,27 +81,33 @@ namespace Assesment_1
             }
 
             //--------------------NEW GAME INITILIZATION--------------------//
-            Console.Clear();
-            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n--------------------------------------------------------------------------------------------------------\nHello! Thank you for buying the Gimen Farm! You will be pleased with your purchase! (Press Enter)");
-            Console.ReadLine();
-            Console.WriteLine("As a bit of a disclaimer: Most people don't survive here long enough to even see the Sowthon.");
-            Console.ReadLine();
-            Console.WriteLine("And the ones that do... Well, they don't make it much longer after that.");
-            Console.ReadLine();
-            Console.WriteLine("You should start your first week by planting some crops and watering them! I\'ll give you some seeds to start off.");
-            Console.ReadLine();
+            if (!gameToClose)//check if player wants to exit game
+            {
+                //roll intro cutscene
+                Console.Clear();
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n--------------------------------------------------------------------------------------------------------\nHello! Thank you for buying the Gimen Farm! You will be pleased with your purchase! (Press Enter)");
+                Console.ReadLine();
+                Console.WriteLine("As a bit of a disclaimer: Most people don't survive here long enough to even see the Sowthon.");
+                Console.ReadLine();
+                Console.WriteLine("And the ones that do... Well, they don't make it much longer after that.");
+                Console.ReadLine();
+                Console.WriteLine("You should start your first week by planting some crops and watering them! I\'ll give you some seeds to start off.");
+                Console.ReadLine();
+            }
 
 
             //--------------------GAME LOOP--------------------//
-            while (true)
+            while (!gameToClose)//check if the player wants to quit
             {
+                //If we still have actions for this week then call DayUpdate
                 if (actions > 0) { DayUpdate(); }
                 else
                 {
+                    //if we are out of actions then the week is over and we can call EndOfWeek/PlantUpdate or End the game if its week 6
                     Console.Clear();
                     if (week == 6)
                     {
-                        Yaug();
+                        Sowthon();
                     }
                     else
                     {
@@ -113,30 +122,13 @@ namespace Assesment_1
                         day = 1;
                     }
                 }
-
-                if (temp)break; //This is only here so VS won't tell me my code is unreachable
-
-                if (gameToClose) goto CloseApp;
             }
 
-
-        
-        //-------------------------CLOSE OR RESTART-------------------------//
-        CloseApp:
-            Console.WriteLine("Type \"R\" to play again.");
-            if (Console.ReadLine().ToLower() == "r")
-            {
-                Main();
-                gameToClose = false;
-            }
-
-            
-            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThank You for Playing!");
-            Console.Read();
-            return;
+            if (closeWithoutRestart) CloseApp();
+            else CloseOrRestart();
         }
 
-        static void DayUpdate()
+        static void DayUpdate()//asks the user what they are doing for the day and calls the approiate method
         {
             string input = "";
             Console.WriteLine($"\n\n\n\n\n\nWhat would you like to do today? WEEK {week} {GetDay()}");
@@ -144,75 +136,90 @@ namespace Assesment_1
             input = Console.ReadLine();
             input = input.ToLower();
 
-            if (input == "h" || input == "help" || input == "commands")
+            if (input == "h" || input == "help" || input == "commands")//Display a list of commands
             {
-                Console.WriteLine("\nList of commands: \nH : help \nE : end game \nP : plant new plant \nW : water \nC : colect produce \nL : list all plants \nB : goes back to this menu at any time");
+                Console.WriteLine("\nList of commands: " +
+                    "\nH : help " +
+                    "\nE : end game " +
+                    "\nP : plant new plant " +
+                    "\nW : water " +
+                    "\nC : colect produce " +
+                    "\nL : list all plants " +
+                    "\nB : goes back to this menu at any time");
             }
-            else if (input == "e" || input == "end" || input == "exit")
+            else if (input == "e" || input == "end" || input == "exit")//Exit Game
             {
-                gameToClose = true;
+                Console.WriteLine("\n\nAre you sure you want to quit the game? " +
+                    "\nUnsaved progress will be lost." +
+                    "\n(y/n)");//
+                input = Console.ReadLine().ToLower();
+                if (input == "y" || input == "yes")//Confrim that the player wants to exit
+                {
+                    closeWithoutRestart = true;//call corect method after breaking loop
+                    gameToClose = true;//break game loop
+                }
             }
-            else if (input == "p" || input == "plant")
+            else if (input == "p" || input == "plant")//Player wants to plant crops but doesn't yet specify the type
             {
                 PlantCrop();
             }
-            else if (input == "p1" || input == "plant1")
+            else if (input == "p1" || input == "plant1")//The player wants to plant wheat
             {
                 PlantCrop(1);
             }
-            else if (input == "p2" || input == "plant2")
+            else if (input == "p2" || input == "plant2")//The player wants to plant cabbage
             {
                 PlantCrop(2);
             }
-            else if (input == "p3" || input == "plant3")
+            else if (input == "p3" || input == "plant3")//The player wants to plant potatoes
             {
                 PlantCrop(3);
             }
-            else if (input == "p4" || input == "plant4")
+            else if (input == "p4" || input == "plant4")//The player wants to plant corn
             {
                 PlantCrop(4);
             }
-            else if (input == "w" || input == "water")
+            else if (input == "w" || input == "water")//Player wants to water plants but doesn't specify type of plant
             {
                 WaterCrop();
             }
-            else if (input == "w1" || input == "water1")
+            else if (input == "w1" || input == "water1")//Player wants to water wheat
             {
                 WaterCrop(1);
             }
-            else if (input == "w2" || input == "water2")
+            else if (input == "w2" || input == "water2")//Player wants to water cabbage
             {
                 WaterCrop(2);
             }
-            else if (input == "w3" || input == "water3")
+            else if (input == "w3" || input == "water3")//Player wants to water potatoes
             {
                 WaterCrop(3);
             }
-            else if (input == "w4" || input == "water4")
+            else if (input == "w4" || input == "water4")//Player wants to water corn
             {
                 WaterCrop(4);
             }
-            else if (input == "c" || input == "collect" || input == "hravest")
+            else if (input == "c" || input == "collect" || input == "hravest")//Player wants to harvest plants but doesn't specify type
             {
                 CollectCrop();
             }
-            else if (input == "c1" || input == "collect1" || input == "hravest1")
+            else if (input == "c1" || input == "collect1" || input == "hravest1")//Player wants to harvest wheat
             {
                 CollectCrop(1);
             }
-            else if (input == "c1" || input == "collect1" || input == "hravest1")
+            else if (input == "c2" || input == "collect2" || input == "hravest2")//Player wants to harvest cabbages
             {
                 CollectCrop(2);
             }
-            else if (input == "c1" || input == "collect1" || input == "hravest1")
+            else if (input == "c3" || input == "collect3" || input == "hravest3")//Player wants to harvest potatoes
             {
                 CollectCrop(3);
             }
-            else if (input == "c1" || input == "collect1" || input == "hravest1")
+            else if (input == "c4" || input == "collect4" || input == "hravest4")//Player wants to harvest corn
             {
                 CollectCrop(4);
             }
-            else if (input == "l" || input == "list" || input == "all")
+            else if (input == "l" || input == "list" || input == "all")//Display a list of all plants and the players inventory
             {
                 Player.PrintAllPlants();
                 Console.WriteLine("\n\nCeller Stock - ");
@@ -221,30 +228,31 @@ namespace Assesment_1
                 Console.WriteLine($"Sacks of Potatoes: {Player.potatoesProduce}.");
                 Console.WriteLine($"Barrows of corn ears: {Player.cornProduce}.");
             }
-            else if (input == "b" || input == "back" || input == "menu")
+            else if (input == "b" || input == "back" || input == "menu")//go to start of game loop
             {
                 //continue
             }
-            else
+            else//Typed something not listed
             {
                 Console.WriteLine("Invalid Input. Try again. Type \"help\" for a list of commands.\n\n");
+                //continue
             }
         }
 
-        static void PlantCrop()
+        static void PlantCrop()//asks what type of plant the user wants and then creates that plant
         {
             Console.WriteLine("Which type of plant would you like to plant? Please choose from the list.");
             Console.WriteLine("\"1\" for Wheat\n\"2\" for Cabbage\n\"3\" for Potatoes\n\"4\" for Corn\n");
             string input = "";
             input = Console.ReadLine();
             input = input.ToLower();
-            if (input == "b" || input == "back" || input == "menu") return;
+            if (input == "b" || input == "back" || input == "menu") return;// return to top of game loop
             
             if (input == "1")//Wheat
             {
-                int pos = Wheat.PlantsCreated;
-                Player.wheat[pos] = new Wheat(pos);
-                UseAction(1);
+                int pos = Wheat.PlantsCreated;//get next available spot in the array that stores the plants
+                Player.wheat[pos] = new Wheat(pos);//add that plant to the array of plants
+                UseAction(1);//we just used an action so we call this one
                 Console.WriteLine("You planted a wheat seed.");
             }
             else if (input == "2")//Cabbage
@@ -274,7 +282,7 @@ namespace Assesment_1
                 PlantCrop();
             }
         }
-        static void PlantCrop(int plantType)
+        static void PlantCrop(int plantType)//plants a crop based on the given plant type
         {
             
             if (plantType == 1)//Wheat
@@ -312,7 +320,7 @@ namespace Assesment_1
             }
         }
 
-        static void WaterCrop()
+        static void WaterCrop()//waters a crop after asking user what plant type
         {
             Console.WriteLine("Which type of plant would you like to water? Please choose from the list.");
             Console.WriteLine("\"1\" for Wheat\n\"2\" for Cabbage\n\"3\" for Potatoes\n\"4\" for Corn\n");
@@ -489,7 +497,7 @@ namespace Assesment_1
             }
         }
 
-        static void WaterCrop(int plantType)
+        static void WaterCrop(int plantType)//waters a crop based on the given plant type
         {
             string input = "";
             if (plantType == 1)//Wheat
@@ -660,7 +668,7 @@ namespace Assesment_1
             }
         }
 
-        static void CollectCrop()
+        static void CollectCrop()//harvests a crop after asking user what plant type
         {
             Console.WriteLine("Which type of plant would you like to harvest? Please choose from the list.");
             Console.WriteLine("\"1\" for Wheat\n\"2\" for Cabbage\n\"3\" for Potatoes\n\"4\" for Corn\n");
@@ -864,7 +872,7 @@ namespace Assesment_1
             }
         }
 
-        static void CollectCrop(int plantType)
+        static void CollectCrop(int plantType)//harvests a crop based on the given plant type
         {
             string input = "";
 
@@ -1063,7 +1071,7 @@ namespace Assesment_1
             }
         }
 
-        static string GetDay()
+        static string GetDay()//returns a string that is the day of the week in game
         {
             switch (day)
             {
@@ -1085,13 +1093,13 @@ namespace Assesment_1
             return "";
         }
 
-        static void UseAction(int plantType)
+        static void UseAction(int plantType)//changes day, controls some powerups, updates dayData
         {
             actions--;
             day++;
             Player.freeHarvestedThisDay = false;
 
-            if (Player.autoPlant)
+            if (Player.autoPlant)//this is an upgrade that the player can get. When an action is used their is a chance that a crop will be plant by itself
             {
                 Random random = new Random();
                 int rand = random.Next(1, 16);
@@ -1135,52 +1143,52 @@ namespace Assesment_1
         }
         
 
-        static void EndOfWeek()
+        static void EndOfWeek()//Checks to see if the player has reached an end to a game, and plays the approriate cutscenes
         {
             Console.WriteLine($"\n\n\n\n\n\n\n\n\n\n===================================================================================================\n\nEND OF WEEK {week}...\n(Press Enter to continue)");
             //Console.WriteLine($"1: {dayData[1,1]} \n2: {dayData[1, 2]} \n3: {dayData[1, 3]} \n4: {dayData[1, 4]}");
             Console.ReadLine();
 
-            if (wheatField >= 4)
+            if (wheatField >= 4)//if The player spent 4 weeks in the wheat field then play ending4
             {
                 Ending4();
             }
-            else if (cabbageField >= 4)
+            else if (cabbageField >= 4)//if The player spent 4 weeks in the cabbage field then play ending4
             {
                 Ending5();
             }
-            else if (potatoesField >= 4)
+            else if (potatoesField >= 4)//if The player spent 4 weeks in the potatoes field then play ending4
             {
                 Ending6();
             }
-            else if (cornField >= 4)
+            else if (cornField >= 4)//if The player spent 4 weeks in the corn field then play ending4
             {
                 Ending7();
             }
 
-            else if (dayData[week, 1] >= 4)
+            else if (dayData[week, 1] >= 4)//if The player spent 4 or more days in the wheat field then we count it as a week spent there
             {
-                WheatField();
+                WheatField();//run cutscene
             }
-            else if (dayData[week, 2] >= 4)
+            else if (dayData[week, 2] >= 4)//if The player spent 4 or more days in the cabbage field then we count it as a week spent there
             {
-                CabbageField();
+                CabbageField();//run cutscene
             }
-            else if (dayData[week, 3] >= 4)
+            else if (dayData[week, 3] >= 4)//if The player spent 4 or more days in the potatoes field then we count it as a week spent there
             {
-                PotatoesField();
+                PotatoesField();//run cutscene
             }
-            else if (dayData[week, 4] >= 4)
+            else if (dayData[week, 4] >= 4)//if The player spent 4 or more days in the corn field then we count it as a week spent there
             {
-                CornField();
+                CornField();//run cutscene
             }
-            else
+            else//The player spread out their days in different fields
             {
-                MultipleFields();
+                MultipleFields();//run cutscene
             }
 
             Console.ReadLine();
-            if (!gameToClose)
+            if (!gameToClose)//make sure the player didn't trigger an ending before saying this
             {
                 Console.WriteLine("\nTime to start the next week.");
                 Console.ReadLine();
@@ -1188,7 +1196,7 @@ namespace Assesment_1
             
         }
 
-        static void WheatField()
+        static void WheatField()//Specific cutscences that take place in the wheat field
         {
             wheatField++;
             Console.WriteLine("\nYou spend a lot of time in the WHEAT field this week.\n");
@@ -1229,7 +1237,7 @@ namespace Assesment_1
                 Ending4();
             }
         }
-        static void CabbageField()
+        static void CabbageField()//Specific cutscences that take place in the cabbage field
         {
             cabbageField++;
             Console.WriteLine("\nYou spend a lot of time in the CABBAGE patch this week.\n");
@@ -1274,7 +1282,7 @@ namespace Assesment_1
                 Ending5();
             }
         }
-        static void PotatoesField()
+        static void PotatoesField()//Specific cutscences that take place in the potatoes field
         {
             potatoesField++;
             Console.WriteLine("\nYou spend a lot of time in the POTATOES field this week.\n");
@@ -1342,7 +1350,7 @@ namespace Assesment_1
                 Ending6();
             }
         }
-        static void CornField()
+        static void CornField()//Specific cutscences that take place in the corn field
         {
             cornField++;
             Console.WriteLine("\nYou spend a lot of time in the CORN field this week.\n");
@@ -1393,7 +1401,7 @@ namespace Assesment_1
                 Ending7();
             }
         }
-        static void MultipleFields()
+        static void MultipleFields()//Specific cutscences that take place across/outside of the farm
         {
             multipleFields++;
             Console.WriteLine("\nYou spend a lot of time in MULTIPLE fields this week.\n");
@@ -1498,7 +1506,7 @@ namespace Assesment_1
             }
         }
 
-        static void Yaug()
+        static void Sowthon()//At the end of week 6 a giant storm comes though known as Sowthon, roll Sowthon cutscene
         {
             Console.Clear();
             Console.WriteLine("\n\n\n\n\n\n\n\n\n#################################################################################\n\nEnd of week 6");
@@ -1518,7 +1526,7 @@ namespace Assesment_1
             Console.ReadLine();
 
 
-            int winRating = 0;
+            int winRating = 0;//used to calculate how much food the player has to survive the Sowthon
             if (Player.wheatProduce >= 1)
             {
                 if (Player.wheatProduce >= 4)
@@ -1552,7 +1560,7 @@ namespace Assesment_1
                 winRating++;
             }
 
-
+            //Depending on our food stores, choose the apporiate endings
             if (winRating >= 8)//plenty of all food
             {
                 Ending0();
@@ -1849,7 +1857,58 @@ namespace Assesment_1
             Console.WriteLine("Maybe next time try doing something else to get a different ending!");
             gameToClose = true;
         }
-        static void SaveGame()
+
+        static void CloseOrRestart()//ask the player if they want to play again, if not then close the game
+        {
+            Console.Clear();
+            Console.WriteLine("Type \"R\" to play again.");
+            if (Console.ReadLine().ToLower() == "r")
+            {
+                RestartGame();
+                Main();
+            }
+
+            CloseApp();
+        }
+
+        static void CloseApp()//Close the application
+        {
+            Console.Clear();
+            Console.WriteLine("Thank You for Playing!");
+            Console.Read();
+        }
+
+        static void RestartGame()//Resets all static varialbes to default values
+        {
+            Player.wheat = new Wheat[50];
+            Player.cabbage = new Cabbage[50];
+            Player.potatoes = new Potatoes[50];
+            Player.corn = new Corn[50];
+
+            Player.wheatProduce = 0;
+            Player.cabbageProduce = 0;
+            Player.potatoesProduce = 0;
+            Player.cornProduce = 0;
+            Player.waterPower = 2;
+            Player.produceProduction = 1;
+            Player.freeHarvesting = false;
+            Player.freeHarvestedThisDay = false;
+            Player.autoPlant = false;
+            Player.miricleGrow = false;
+
+            actions = 7;
+            gameToClose = false;
+            week = 1;
+            day = 1;
+            dayData = new int[7, 5];//[week, type of plant] stores how many days were speant in that field
+
+            wheatField = 0;
+            cabbageField = 0;
+            potatoesField = 0;
+            cornField = 0;
+            multipleFields = 0;
+        }
+        static void SaveGame()//Writes to save data so that the endings is unlocked for future
         {
             StreamWriter streamWriter = new StreamWriter(@"SaveData.txt");
             foreach (var i in endingsUnlocked)
@@ -1866,7 +1925,7 @@ namespace Assesment_1
             streamWriter.Close();
             Console.WriteLine("STREAM: Game saved.");
         }
-        static void ChooseToViewEnding()
+        static void ChooseToViewEnding()//Gets input from user on which ending they want to view. Only gives them the option to choose endings they have previously unlocked.
         {
             int totalUnlocked = 0;
             foreach(var i in endingsUnlocked)
@@ -1874,13 +1933,26 @@ namespace Assesment_1
                 if (i) totalUnlocked++;
             }
 
+            if (totalUnlocked == 0)
+            {
+                Console.WriteLine("You don't have any endings unlocked.");
+                Console.WriteLine("Try playing the game more!");
+                Console.ReadLine();
+                return;
+            }
+
             Console.Clear();
             Console.WriteLine($"You have {totalUnlocked}/{endingsUnlocked.Length} endings unlocked.");
             Console.WriteLine("Please pick an unlocked ending to view from the list:");
-            for (int i = 0; i < endingsUnlocked.Length; i++)
-            {
-                if (endingsUnlocked[i]) Console.WriteLine(i + 1);
-            }
+
+            if (endingsUnlocked[0]) Console.WriteLine("1: You Thrived...");
+            if (endingsUnlocked[1]) Console.WriteLine("2: You Sustain...");
+            if (endingsUnlocked[2]) Console.WriteLine("3: You Suffer...");
+            if (endingsUnlocked[3]) Console.WriteLine("4: You Starve...");
+            if (endingsUnlocked[4]) Console.WriteLine("5: *Iron Giant...");
+            if (endingsUnlocked[5]) Console.WriteLine("6: *Locusts...");
+            if (endingsUnlocked[6]) Console.WriteLine("7: *Mold...");
+            if (endingsUnlocked[7]) Console.WriteLine("8: *Crows...");
 
             string input = Console.ReadLine().ToLower();
 

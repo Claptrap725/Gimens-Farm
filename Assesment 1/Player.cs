@@ -8,23 +8,24 @@ namespace Assesment_1
 {
     class Player
     {
-        public static Wheat[] wheat = new Wheat[50];
-        public static Cabbage[] cabbage = new Cabbage[50];
-        public static Potatoes[] potatoes = new Potatoes[50];
-        public static Corn[] corn = new Corn[50];
+        public static Wheat[] wheat = new Wheat[50];//Array that stores all wheat plants in the farm
+        public static Cabbage[] cabbage = new Cabbage[50];//Array that stores all cabbage plants in the farm
+        public static Potatoes[] potatoes = new Potatoes[50];//Array that stores all potatoes plants in the farm
+        public static Corn[] corn = new Corn[50];//Array that stores all corn plants in the farm
 
-        public static int wheatProduce = 0;
-        public static int cabbageProduce = 0;
-        public static int potatoesProduce = 0;
-        public static int cornProduce = 0;
-        public static int waterPower = 2;
-        public static int produceProduction = 1;
-        public static bool freeHarvesting = false;
-        public static bool freeHarvestedThisDay = false;
-        public static bool autoPlant = false;
-        public static bool miricleGrow = false;
+        public static int wheatProduce = 0;//how much wheat produce the player has collected and stored
+        public static int cabbageProduce = 0;//how much cabbage produce the player has collected and stored
+        public static int potatoesProduce = 0;//how much potatoes produce the player has collected and stored
+        public static int cornProduce = 0;//how much corn produce the player has collected and stored
 
-        public static Plant[] allPlants
+        public static int waterPower = 2;//how skilled the player is at watering
+        public static int produceProduction = 1;//how fast plants make produce
+        public static bool freeHarvesting = false;//does the player have the skill to harvest a free plant
+        public static bool freeHarvestedThisDay = false;//has the player not used free harvesting today
+        public static bool autoPlant = false;//is the autoPlant skills enabled
+        public static bool miricleGrow = false;//does the player have the miricle grow skill
+
+        public static Plant[] allPlants//returns an array with every plant on the farm in one array that is properly sized
         {
             get
             {
@@ -59,14 +60,14 @@ namespace Assesment_1
                 return plants;
             }
         }
-        public static void PrintAllPlants()
+        public static void PrintAllPlants()//prints all plants on the farm
         {
             PrintAllWheat();
             PrintAllCabbage();
             PrintAllPotatoes();
             PrintAllCorn();
         }
-        public static void PlantUpdateAll()
+        public static void PlantUpdateAll()//calls the PlantUpdate method on all plants in the farm
         {
             Plant[] plants = allPlants;
             foreach(var i in plants)
@@ -75,7 +76,7 @@ namespace Assesment_1
             }
         }
         
-        public static void PrintAllWheat()
+        public static void PrintAllWheat()//prints all wheat plants
         {
             foreach (var i in wheat)
             {
@@ -103,7 +104,7 @@ namespace Assesment_1
 
             }
         }
-        public static void PrintAllCabbage()
+        public static void PrintAllCabbage()//prints all cabbage plants
         {
             foreach (var i in cabbage)
             {
@@ -130,7 +131,7 @@ namespace Assesment_1
 
             }
         }
-        public static void PrintAllPotatoes()
+        public static void PrintAllPotatoes()//prints all potato plants
         {
             foreach (var i in potatoes)
             {
@@ -155,7 +156,7 @@ namespace Assesment_1
 
             }
         }
-        public static void PrintAllCorn()
+        public static void PrintAllCorn()//prints all corn plants
         {
             foreach (var i in corn)
             {

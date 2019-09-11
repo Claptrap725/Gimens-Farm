@@ -8,12 +8,12 @@ namespace Assesment_1
 {
     class Plant
     {
-        public int hydration;
-        public int age;
-        public int produce;
-        public int pos;
-        public int produceAge;
-        public int deathAge;
+        public int hydration;//how much water does the plant have
+        public int age;//how old is the plant
+        public int produce;//how much produce does the plant have
+        public int pos;//position in the array in the Player class
+        public int produceAge;//age of which the plant will start making produce
+        public int deathAge;//age of which the plant will be too old and wither
 
 
         public Plant()
@@ -31,12 +31,12 @@ namespace Assesment_1
             pos = _pos;
         }
 
-        public void Water()
+        public void Water()//water the plant based on player skill
         {
             hydration += Player.waterPower;
         }
 
-        public void PlantUpdate()
+        public void PlantUpdate()//update the plant to be one week older
         {
             if (age == 0 && hydration == 0) { }//seed doesn't sprout
             else
@@ -69,15 +69,9 @@ namespace Assesment_1
             }
         }
 
-        public void ChangePos(int num)
-        {
-            pos += num;
-        }
-
-        public virtual void Die()
+        public virtual void Die()//kill the plant
         {
             Console.WriteLine("Plant Died");
-            //Delete References so GC removes this object
         }
         
     }
