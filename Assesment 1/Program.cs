@@ -9,7 +9,7 @@ namespace Assesment_1
 {
     class Program
     {
-        static bool temp = false;
+        static bool temp = false;//this is just a variable that is always false
         static int actions = 7;
         static bool gameToClose = false;
         static int week = 1;
@@ -58,7 +58,7 @@ namespace Assesment_1
                 input = Console.ReadLine();
                 input = input.ToLower();
 
-                if (input == "start")
+                if (input == "start" || input == "s")
                 {
                     break;
                 }
@@ -114,7 +114,7 @@ namespace Assesment_1
                     }
                 }
 
-                if (temp)break; //Game Ending Condition
+                if (temp)break; //This is only here so VS won't tell me my code is unreachable
 
                 if (gameToClose) goto CloseApp;
             }
@@ -127,6 +127,7 @@ namespace Assesment_1
             if (Console.ReadLine().ToLower() == "r")
             {
                 Main();
+                gameToClose = false;
             }
 
             
@@ -143,27 +144,75 @@ namespace Assesment_1
             input = Console.ReadLine();
             input = input.ToLower();
 
-            if (input == "h")
+            if (input == "h" || input == "help" || input == "commands")
             {
                 Console.WriteLine("\nList of commands: \nH : help \nE : end game \nP : plant new plant \nW : water \nC : colect produce \nL : list all plants \nB : goes back to this menu at any time");
             }
-            else if (input == "e")
+            else if (input == "e" || input == "end" || input == "exit")
             {
                 gameToClose = true;
             }
-            else if (input == "p")
+            else if (input == "p" || input == "plant")
             {
                 PlantCrop();
             }
-            else if (input == "w")
+            else if (input == "p1" || input == "plant1")
+            {
+                PlantCrop(1);
+            }
+            else if (input == "p2" || input == "plant2")
+            {
+                PlantCrop(2);
+            }
+            else if (input == "p3" || input == "plant3")
+            {
+                PlantCrop(3);
+            }
+            else if (input == "p4" || input == "plant4")
+            {
+                PlantCrop(4);
+            }
+            else if (input == "w" || input == "water")
             {
                 WaterCrop();
             }
-            else if (input == "c")
+            else if (input == "w1" || input == "water1")
+            {
+                WaterCrop(1);
+            }
+            else if (input == "w2" || input == "water2")
+            {
+                WaterCrop(2);
+            }
+            else if (input == "w3" || input == "water3")
+            {
+                WaterCrop(3);
+            }
+            else if (input == "w4" || input == "water4")
+            {
+                WaterCrop(4);
+            }
+            else if (input == "c" || input == "collect" || input == "hravest")
             {
                 CollectCrop();
             }
-            else if (input == "l")
+            else if (input == "c1" || input == "collect1" || input == "hravest1")
+            {
+                CollectCrop(1);
+            }
+            else if (input == "c1" || input == "collect1" || input == "hravest1")
+            {
+                CollectCrop(2);
+            }
+            else if (input == "c1" || input == "collect1" || input == "hravest1")
+            {
+                CollectCrop(3);
+            }
+            else if (input == "c1" || input == "collect1" || input == "hravest1")
+            {
+                CollectCrop(4);
+            }
+            else if (input == "l" || input == "list" || input == "all")
             {
                 Player.PrintAllPlants();
                 Console.WriteLine("\n\nCeller Stock - ");
@@ -172,7 +221,7 @@ namespace Assesment_1
                 Console.WriteLine($"Sacks of Potatoes: {Player.potatoesProduce}.");
                 Console.WriteLine($"Barrows of corn ears: {Player.cornProduce}.");
             }
-            else if (input == "b")
+            else if (input == "b" || input == "back" || input == "menu")
             {
                 //continue
             }
@@ -189,7 +238,7 @@ namespace Assesment_1
             string input = "";
             input = Console.ReadLine();
             input = input.ToLower();
-            if (input == "b") return;
+            if (input == "b" || input == "back" || input == "menu") return;
             
             if (input == "1")//Wheat
             {
@@ -225,6 +274,43 @@ namespace Assesment_1
                 PlantCrop();
             }
         }
+        static void PlantCrop(int plantType)
+        {
+            
+            if (plantType == 1)//Wheat
+            {
+                int pos = Wheat.PlantsCreated;
+                Player.wheat[pos] = new Wheat(pos);
+                UseAction(1);
+                Console.WriteLine("You planted a wheat seed.");
+            }
+            else if (plantType == 2)//Cabbage
+            {
+                int pos = Cabbage.PlantsCreated;
+                Player.cabbage[pos] = new Cabbage(pos);
+                UseAction(2);
+                Console.WriteLine("You planted a cabbage seed.");
+            }
+            else if (plantType == 3)//Potatoes
+            {
+                int pos = Potatoes.PlantsCreated;
+                Player.potatoes[pos] = new Potatoes(pos);
+                UseAction(3);
+                Console.WriteLine("You planted a potato.");
+            }
+            else if (plantType == 4)//Corn
+            {
+                int pos = Corn.PlantsCreated;
+                Player.corn[pos] = new Corn(pos);
+                UseAction(4);
+                Console.WriteLine("You planted a corn seed.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid Input.");
+                return;
+            }
+        }
 
         static void WaterCrop()
         {
@@ -233,7 +319,7 @@ namespace Assesment_1
             string input = "";
             input = Console.ReadLine();
             input = input.ToLower();
-            if (input == "b") return;
+            if (input == "b" || input == "back" || input == "menu") return;
 
             if (input == "1")//Wheat
             {
@@ -255,7 +341,8 @@ namespace Assesment_1
                 Console.WriteLine("Which Wheat plant would you like to water? Please type a plant number from the list.");
                 Player.PrintAllWheat();
                 input = Console.ReadLine();
-                if (input.ToLower() == "b") return;
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
 
                 if (!int.TryParse(input, out pos))
                 {
@@ -294,7 +381,8 @@ namespace Assesment_1
                 Console.WriteLine("Which Cabbage plant would you like to water? Please type a plant number from the list.");
                 Player.PrintAllCabbage();
                 input = Console.ReadLine();
-                if (input.ToLower() == "b") return;
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
 
                 if (!int.TryParse(input, out pos))
                 {
@@ -333,7 +421,8 @@ namespace Assesment_1
                 Console.WriteLine("Which Potato plant would you like to water? Please type a plant number from the list.");
                 Player.PrintAllPotatoes();
                 input = Console.ReadLine();
-                if (input.ToLower() == "b") return;
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
 
                 if (!int.TryParse(input, out pos))
                 {
@@ -372,7 +461,179 @@ namespace Assesment_1
                 Console.WriteLine("Which Corn plant would you like to water? Please type a plant number from the list.");
                 Player.PrintAllCorn();
                 input = Console.ReadLine();
-                if (input.ToLower() == "b") return;
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
+
+                if (!int.TryParse(input, out pos))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+                pos--;
+                if (pos < 0 || pos > 50 || Player.corn[pos] == null)
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+
+                UseAction(4);
+                Console.WriteLine(pos);
+                Player.corn[pos].Water();
+                Console.WriteLine("You watered the corn plant.");
+
+            }
+            else
+            {
+                Console.WriteLine("Invalid Input. Try again.");
+                WaterCrop();
+            }
+        }
+
+        static void WaterCrop(int plantType)
+        {
+            string input = "";
+            if (plantType == 1)//Wheat
+            {
+                bool anyPlants = false;
+                foreach (var i in Player.wheat)
+                {
+                    if (i != null)
+                    {
+                        anyPlants = true;
+                        break;
+                    }
+                }
+                if (!anyPlants)
+                {
+                    Console.WriteLine("You have no wheat to water.");
+                    return;
+                }
+                int pos = -1;
+                Console.WriteLine("Which Wheat plant would you like to water? Please type a plant number from the list.");
+                Player.PrintAllWheat();
+                input = Console.ReadLine();
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
+
+                if (!int.TryParse(input, out pos))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+                pos--;
+                if (pos < 0 || pos > 50 || Player.wheat[pos] == null)
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+
+                UseAction(1);
+                Console.WriteLine(pos);
+                Player.wheat[pos].Water();
+                Console.WriteLine("You watered the wheat plant.");
+            }
+            else if (plantType == 2)//Cabbage
+            {
+                bool anyPlants = false;
+                foreach (var i in Player.cabbage)
+                {
+                    if (i != null)
+                    {
+                        anyPlants = true;
+                        break;
+                    }
+                }
+                if (!anyPlants)
+                {
+                    Console.WriteLine("You have no cabbage to water.");
+                    return;
+                }
+                int pos = -1;
+                Console.WriteLine("Which Cabbage plant would you like to water? Please type a plant number from the list.");
+                Player.PrintAllCabbage();
+                input = Console.ReadLine();
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
+
+                if (!int.TryParse(input, out pos))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+                pos--;
+                if (pos < 0 || pos > 50 || Player.cabbage[pos] == null)
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+
+                UseAction(2);
+                Console.WriteLine(pos);
+                Player.cabbage[pos].Water();
+                Console.WriteLine("You watered the cabbage plant.");
+            }
+            else if (plantType == 3)//Potatoes
+            {
+                bool anyPlants = false;
+                foreach (var i in Player.potatoes)
+                {
+                    if (i != null)
+                    {
+                        anyPlants = true;
+                        break;
+                    }
+                }
+                if (!anyPlants)
+                {
+                    Console.WriteLine("You have no potatoes to water.");
+                    return;
+                }
+                int pos = -1;
+                Console.WriteLine("Which Potato plant would you like to water? Please type a plant number from the list.");
+                Player.PrintAllPotatoes();
+                input = Console.ReadLine();
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
+
+                if (!int.TryParse(input, out pos))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+                pos--;
+                if (pos < 0 || pos > 50 || Player.potatoes[pos] == null)
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+
+                UseAction(3);
+                Console.WriteLine(pos);
+                Player.potatoes[pos].Water();
+                Console.WriteLine("You watered the potato plant.");
+            }
+            else if (plantType == 4)//Corn
+            {
+                bool anyPlants = false;
+                foreach (var i in Player.corn)
+                {
+                    if (i != null)
+                    {
+                        anyPlants = true;
+                        break;
+                    }
+                }
+                if (!anyPlants)
+                {
+                    Console.WriteLine("You have no corn to water.");
+                    return;
+                }
+                int pos = -1;
+                Console.WriteLine("Which Corn plant would you like to water? Please type a plant number from the list.");
+                Player.PrintAllCorn();
+                input = Console.ReadLine();
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
 
                 if (!int.TryParse(input, out pos))
                 {
@@ -406,7 +667,7 @@ namespace Assesment_1
             string input = "";
             input = Console.ReadLine();
             input = input.ToLower();
-            if (input == "b") return;
+            if (input == "b" || input == "back" || input == "menu") return;
 
             if (input == "1")//Wheat
             {
@@ -428,7 +689,8 @@ namespace Assesment_1
                 Console.WriteLine("Which wheat plant would you like to harvest? Please type a plant number from the list.");
                 Player.PrintAllWheat();
                 input = Console.ReadLine();
-                if (input.ToLower() == "b") return;
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
 
                 if (!int.TryParse(input, out pos))
                 {
@@ -476,7 +738,8 @@ namespace Assesment_1
                 Console.WriteLine("Which cabbage plant would you like to harvest? Please type a plant number from the list.");
                 Player.PrintAllCabbage();
                 input = Console.ReadLine();
-                if (input.ToLower() == "b") return;
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
 
                 if (!int.TryParse(input, out pos))
                 {
@@ -523,7 +786,8 @@ namespace Assesment_1
                 Console.WriteLine("Which potato plant would you like to harvest? Please type a plant number from the list.");
                 Player.PrintAllPotatoes();
                 input = Console.ReadLine();
-                if (input.ToLower() == "b") return;
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
 
                 if (!int.TryParse(input, out pos))
                 {
@@ -570,7 +834,207 @@ namespace Assesment_1
                 Console.WriteLine("Which corn plant would you like to harvest? Please type a plant number from the list.");
                 Player.PrintAllCorn();
                 input = Console.ReadLine();
-                if (input.ToLower() == "b") return;
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
+
+                if (!int.TryParse(input, out pos))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+                pos--;
+                if (pos < 0 || pos > 50 || Player.corn[pos] == null)
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+
+                if (Player.freeHarvesting && !Player.freeHarvestedThisDay)
+                {
+                    Player.freeHarvestedThisDay = true;
+                }
+                else
+                {
+                    UseAction(4);
+                }
+                Console.WriteLine(pos);
+                Console.WriteLine($"You harvested the corn plant, destroying it.\nYou collected {Player.corn[pos].produce} corn");
+                Player.cornProduce += Player.corn[pos].produce;
+                Player.corn[pos].Die();
+            }
+        }
+
+        static void CollectCrop(int plantType)
+        {
+            string input = "";
+
+            if (plantType == 1)//Wheat
+            {
+                bool anyPlants = false;
+                foreach (var i in Player.wheat)
+                {
+                    if (i != null)
+                    {
+                        anyPlants = true;
+                        break;
+                    }
+                }
+                if (!anyPlants)
+                {
+                    Console.WriteLine("You have no wheat to harvest.");
+                    return;
+                }
+                int pos = -1;
+                Console.WriteLine("Which wheat plant would you like to harvest? Please type a plant number from the list.");
+                Player.PrintAllWheat();
+                input = Console.ReadLine();
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
+
+                if (!int.TryParse(input, out pos))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+                pos--;
+                if (pos < 0 || pos > 50 || Player.wheat[pos] == null)
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+
+                if (Player.freeHarvesting && !Player.freeHarvestedThisDay)
+                {
+                    Player.freeHarvestedThisDay = true;
+                }
+                else
+                {
+                    UseAction(1);
+                }
+                Console.WriteLine(pos);
+                Console.WriteLine($"You harvested the wheat plant, destroying it.\nYou collected {Player.wheat[pos].produce} wheat");
+                Player.wheatProduce += Player.wheat[pos].produce;
+                Player.wheat[pos].Die();
+
+            }
+            else if (plantType == 2)//cabbage
+            {
+                bool anyPlants = false;
+                foreach (var i in Player.cabbage)
+                {
+                    if (i != null)
+                    {
+                        anyPlants = true;
+                        break;
+                    }
+                }
+                if (!anyPlants)
+                {
+                    Console.WriteLine("You have no cabbage to harvest.");
+                    return;
+                }
+                int pos = -1;
+                Console.WriteLine("Which cabbage plant would you like to harvest? Please type a plant number from the list.");
+                Player.PrintAllCabbage();
+                input = Console.ReadLine();
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
+
+                if (!int.TryParse(input, out pos))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+                pos--;
+                if (pos < 0 || pos > 50 || Player.cabbage[pos] == null)
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+
+                if (Player.freeHarvesting && !Player.freeHarvestedThisDay)
+                {
+                    Player.freeHarvestedThisDay = true;
+                }
+                else
+                {
+                    UseAction(2);
+                }
+                Console.WriteLine(pos);
+                Console.WriteLine($"You harvested the cabbage plant, destroying it.\nYou collected {Player.cabbage[pos].produce} cabbage");
+                Player.cabbageProduce += Player.cabbage[pos].produce;
+                Player.cabbage[pos].Die();
+            }
+            else if (plantType == 3)//potatoes
+            {
+                bool anyPlants = false;
+                foreach (var i in Player.potatoes)
+                {
+                    if (i != null)
+                    {
+                        anyPlants = true;
+                        break;
+                    }
+                }
+                if (!anyPlants)
+                {
+                    Console.WriteLine("You have no potatoes to harvest.");
+                    return;
+                }
+                int pos = -1;
+                Console.WriteLine("Which potato plant would you like to harvest? Please type a plant number from the list.");
+                Player.PrintAllPotatoes();
+                input = Console.ReadLine();
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
+
+                if (!int.TryParse(input, out pos))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+                pos--;
+                if (pos < 0 || pos > 50 || Player.potatoes[pos] == null)
+                {
+                    Console.WriteLine("Invalid Input.");
+                    return;
+                }
+
+                if (Player.freeHarvesting && !Player.freeHarvestedThisDay)
+                {
+                    Player.freeHarvestedThisDay = true;
+                }
+                else
+                {
+                    UseAction(3);
+                }
+                Console.WriteLine(pos);
+                Console.WriteLine($"You harvested the potatoes plant, destroying it.\nYou collected {Player.potatoes[pos].produce} potatoes");
+                Player.potatoesProduce += Player.potatoes[pos].produce;
+                Player.potatoes[pos].Die();
+            }
+            else if (plantType == 4)//corn
+            {
+                bool anyPlants = false;
+                foreach (var i in Player.corn)
+                {
+                    if (i != null)
+                    {
+                        anyPlants = true;
+                        break;
+                    }
+                }
+                if (!anyPlants)
+                {
+                    Console.WriteLine("You have no corn to harvest.");
+                    return;
+                }
+                int pos = -1;
+                Console.WriteLine("Which corn plant would you like to harvest? Please type a plant number from the list.");
+                Player.PrintAllCorn();
+                input = Console.ReadLine();
+                input = input.ToLower();
+                if (input == "b" || input == "back" || input == "menu") return;
 
                 if (!int.TryParse(input, out pos))
                 {
@@ -727,7 +1191,7 @@ namespace Assesment_1
         static void WheatField()
         {
             wheatField++;
-            Console.WriteLine("\nYou spend a lot of time in the wheat field this week.\n");
+            Console.WriteLine("\nYou spend a lot of time in the WHEAT field this week.\n");
             
             if (wheatField == 1)
             {
@@ -737,7 +1201,7 @@ namespace Assesment_1
             }
             else if (wheatField == 2)
             {
-                Console.WriteLine("Tending the field, you notice that the pile of metal you stacks is gone!");
+                Console.WriteLine("Tending the field, you notice that the pile of metal you stacked is gone!");
                 Console.ReadLine();
                 Console.WriteLine("Pondering where it went, you search around the field finding no remenants of it.");
                 Console.ReadLine();
@@ -768,7 +1232,7 @@ namespace Assesment_1
         static void CabbageField()
         {
             cabbageField++;
-            Console.WriteLine("\nYou spend a lot of time in the cabbage patch this week.");
+            Console.WriteLine("\nYou spend a lot of time in the CABBAGE patch this week.\n");
 
             if (cabbageField == 1)
             {
@@ -813,7 +1277,7 @@ namespace Assesment_1
         static void PotatoesField()
         {
             potatoesField++;
-            Console.WriteLine("\nYou spend a lot of time in the potatoes field this week.");
+            Console.WriteLine("\nYou spend a lot of time in the POTATOES field this week.\n");
 
             if (potatoesField == 1)
             {
@@ -881,7 +1345,7 @@ namespace Assesment_1
         static void CornField()
         {
             cornField++;
-            Console.WriteLine("\nYou spend a lot of time in the corn field this week.");
+            Console.WriteLine("\nYou spend a lot of time in the CORN field this week.\n");
 
             if (cornField == 1)
             {
@@ -932,7 +1396,7 @@ namespace Assesment_1
         static void MultipleFields()
         {
             multipleFields++;
-            Console.WriteLine("\nYou spend a lot of time in multiple fields this week.");
+            Console.WriteLine("\nYou spend a lot of time in MULTIPLE fields this week.\n");
 
             if (multipleFields == 1)
             {
@@ -948,9 +1412,9 @@ namespace Assesment_1
                 Console.ReadLine();
                 Console.WriteLine("Except for one of the children who throws and egg at your head.");
                 Console.ReadLine();
-                Console.WriteLine("A lady smacks him, says, \"I'm so sorry.\" and drags him off.");
+                Console.WriteLine("A lady smacks him, says, \"I'm so sorry,\" and drags him off.");
                 Console.ReadLine();
-                Console.WriteLine("It gets all in your hair and you decide to head home to shower.");
+                Console.WriteLine("The egg gets in your hair and you decide to head home to shower.");
             }
             else if (multipleFields == 3)
             {
@@ -979,13 +1443,58 @@ namespace Assesment_1
             }
             else if (multipleFields == 4)
             {
-                Console.WriteLine("");
+                Console.WriteLine("While working the varius fields you see a horse.");
                 Console.ReadLine();
+                Console.WriteLine("Then another horse.");
+                Console.ReadLine();
+                Console.WriteLine("And another.");
+                Console.ReadLine();
+                Console.WriteLine("A few seconds later and you can see a stampede of horses coming over a hill going straight towards your field!");
+                Console.ReadLine();
+                Console.WriteLine("This can't be good for the crops!");
+                Console.ReadLine();
+                Random random = new Random();
+                bool plantKilled = false;
+                foreach (var i in Player.allPlants)
+                {
+                    if (i != null)
+                    {
+                        if (random.Next(1, 5) == 1)
+                        {
+                            i.Die();
+                            plantKilled = true;
+                        }
+                    }
+                }
+                if (plantKilled)
+                {
+                    Console.WriteLine("The horses come runnig through the field trampling some crops!");
+                    Console.ReadLine();
+                    Console.WriteLine("Well that was unfortunate.");
+                    Console.ReadLine();
+                    Console.WriteLine("Replant I guess?");
+                }
+                else
+                {
+                    Console.WriteLine("The horses come running through the field...");
+                    Console.ReadLine();
+                    Console.WriteLine("Wow. They missed every plant");
+                    Console.ReadLine();
+                    Console.WriteLine("You are one lucky person!");
+                }
+
             }
             else if (multipleFields == 5)
             {
-                Console.WriteLine("");
+                Console.WriteLine("While working in the fields you notice some very dark clouds in the distance.");
                 Console.ReadLine();
+                Console.WriteLine("It doesn't look like they will reach the farm today.");
+                Console.ReadLine();
+                Console.WriteLine("Maybe the rain will help with the watering efforts!");
+                Console.ReadLine();
+                Console.WriteLine("Then again, it might wash some plants out of their soil!");
+                Console.ReadLine();
+                Console.WriteLine("Only time will tell.");
             }
         }
 
@@ -1203,7 +1712,7 @@ namespace Assesment_1
             Console.WriteLine("Do you try to dodge? (Press D to dodge)");
             if (Console.ReadLine().ToLower() == "d")
             {
-                Console.WriteLine("You dodge out of the way of hist massive fist!");
+                Console.WriteLine("You dodge out of the way of his massive fist!");
                 Console.ReadLine();
                 Console.WriteLine("And get clobered by the second one...");
                 Console.ReadLine();
