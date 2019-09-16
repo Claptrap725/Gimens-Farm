@@ -1963,34 +1963,42 @@ namespace Assesment_1
             else if (input == "1" && endingsUnlocked[0])
             {
                 Ending0();
+                RestartGame();
             }
             else if (input == "2" && endingsUnlocked[1])
             {
                 Ending1();
+                RestartGame();
             }
             else if (input == "3" && endingsUnlocked[2])
             {
                 Ending2();
+                RestartGame();
             }
             else if (input == "4" && endingsUnlocked[3])
             {
                 Ending3();
+                RestartGame();
             }
             else if (input == "5" && endingsUnlocked[4])
             {
                 Ending4();
+                RestartGame();
             }
             else if (input == "6" && endingsUnlocked[5])
             {
                 Ending5();
+                RestartGame();
             }
             else if (input == "7" && endingsUnlocked[6])
             {
                 Ending6();
+                RestartGame();
             }
             else if (input == "8" && endingsUnlocked[7])
             {
                 Ending7();
+                RestartGame();
             }
             else
             {

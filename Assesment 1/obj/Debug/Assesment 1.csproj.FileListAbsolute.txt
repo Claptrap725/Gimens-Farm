@@ -6,3 +6,7 @@ C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.cspr
 C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.exe
 C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.pdb
 C:\Users\s199058\source\repos\Assesment 1\Assesment 1\bin\Debug\SaveData.txt
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\bin\Debug\Assesment 1.exe.manifest
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\bin\Debug\Assesment 1.application
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.exe.manifest
+C:\Users\s199058\source\repos\Assesment 1\Assesment 1\obj\Debug\Assesment 1.application
